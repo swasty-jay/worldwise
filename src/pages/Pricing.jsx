@@ -1,7 +1,12 @@
-import React from "react";
+import NavPage from "../components/NavPage";
 
 const Pricing = () => {
-  return <div>Pricing</div>;
+  return (
+    <div>
+      <NavPage />
+      Pricing
+    </div>
+  );
 };
 
 export default Pricing;

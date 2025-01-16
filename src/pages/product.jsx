@@ -1,7 +1,12 @@
-import React from "react";
+import NavPage from "../components/NavPage";
 
 const Product = () => {
-  return <div>product</div>;
+  return (
+    <div>
+      <NavPage />
+      product
+    </div>
+  );
 };
 
 export default Product;
