@@ -8,7 +8,7 @@ const Homepage = () => {
 
       <h4>worldwise</h4>
 
-      <Link to="/product">Product</Link>
+      <Link to="/App">go to App</Link>
     </div>
   );
 };
