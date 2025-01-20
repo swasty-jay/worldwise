@@ -4,7 +4,8 @@ import Message from "./Message";
 import CountryItem from "./CountryItem";
 const CountryList = ({ cities, isloading }) => {
   if (isloading) return <Spinner />;
-  if (!cities.length)
+  // if (!cities.length)
+  if (!Array.isArray(cities) || cities.length === 0)
     return (
       <Message message="Add your first city by clicking on a city on the map" />
     );
