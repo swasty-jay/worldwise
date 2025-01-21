@@ -2,7 +2,7 @@ import CityItem from "./CityItem";
 import styles from "./CityList.module.css";
 import Spinner from "./Spinner";
 import Message from "./Message";
-// import PropTypes from "prop-types";
+import PropTypes from "prop-types";
 const CityList = ({ cities, isloading }) => {
   if (isloading) return <Spinner />;
   if (!cities.length)
@@ -18,9 +18,9 @@ const CityList = ({ cities, isloading }) => {
   );
 };
 
-// CityList.propTypes = {
-//   cities: PropTypes.array,
-//   isloading: PropTypes.bool,
-// };
+CityList.propTypes = {
+  cities: PropTypes.array,
+  isloading: PropTypes.bool,
+};
 
 export default CityList;

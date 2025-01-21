@@ -4,15 +4,19 @@ import Message from "./Message";
 import CountryItem from "./CountryItem";
 const CountryList = ({ cities, isloading }) => {
   if (isloading) return <Spinner />;
-  // if (!cities.length)
-  if (!Array.isArray(cities) || cities.length === 0)
+  if (!cities.length)
+    // if (!Array.isArray(cities) || cities.length === 0)
     return (
       <Message message="Add your first city by clicking on a city on the map" />
     );
 
-  const countries = [];
+  const countries = cities.reduce((arr, city) => {
+    if (!arr.map((el) => el.country).includes(city.country)) {
+      return [...arr, { country: city.country, emoji: city.emoji }];
+    } else return arr;
+  }, []);
   return (
-    <ul className={styles.countriesList}>
+    <ul className={styles.countryList}>
       {countries.map((country) => (
         <CountryItem country={country} key={countries.id} />
       ))}
