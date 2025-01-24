@@ -7,7 +7,7 @@ const Map = () => {
   const lat = searchParams.get("lat");
   const lng = searchParams.get("lng");
   return (
-    <div className={styles.mapContainer} onClick={() => navigate("form")}>
+    <div className={styles.mapContainer} onClick={() => navigate("form  ")}>
       <h2>map</h2>
       <h3>
         position: {lat}, {lng}
