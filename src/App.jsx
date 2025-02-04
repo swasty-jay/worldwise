@@ -10,31 +10,34 @@ import CountryList from "./components/CountryList";
 import City from "./components/City";
 import Form from "./components/Form";
 import { CitiesProvider } from "./context/CitiesContext";
+import { AuthProvider } from "./context/FakeAuthContext";
 
 // const BASE_URL = "http://localhost:9000";
 
-const App = () => {
+function App() {
   return (
-    <CitiesProvider>
-      <BrowserRouter>
-        <Routes>
-          <Route index element={<Homepage />} />
-          <Route path="/Product" element={<Product />} />
-          <Route path="/pricing" element={<Pricing />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/App" element={<AppLayout />}>
-            <Route index element={<Navigate to={"cities"} replace />} />
+    <AuthProvider>
+      <CitiesProvider>
+        <BrowserRouter>
+          <Routes>
+            <Route index element={<Homepage />} />
+            <Route path="/Product" element={<Product />} />
+            <Route path="/pricing" element={<Pricing />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/App" element={<AppLayout />}>
+              <Route index element={<Navigate to={"cities"} replace />} />
 
-            <Route path="cities" element={<CityList />} />
-            <Route path="cities/:id" element={<City />} />
-            <Route path="countries" element={<CountryList />} />
-            <Route path="form" element={<Form />} />
-          </Route>
-          <Route path="*" element={<PageNotFound />} />
-        </Routes>
-      </BrowserRouter>
-    </CitiesProvider>
+              <Route path="cities" element={<CityList />} />
+              <Route path="cities/:id" element={<City />} />
+              <Route path="countries" element={<CountryList />} />
+              <Route path="form" element={<Form />} />
+            </Route>
+            <Route path="*" element={<PageNotFound />} />
+          </Routes>
+        </BrowserRouter>
+      </CitiesProvider>
+    </AuthProvider>
   );
-};
+}
 
 export default App;
