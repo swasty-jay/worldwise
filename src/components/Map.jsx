@@ -1,25 +1,51 @@
 import { useNavigate, useSearchParams } from "react-router-dom";
-import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
+import {
+  MapContainer,
+  TileLayer,
+  Marker,
+  Popup,
+  useMap,
+  useMapEvents,
+} from "react-leaflet";
 import styles from "./Map.module.css";
 import "leaflet/dist/leaflet.css";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useCities } from "../context/CitiesContext";
+import { useGeolocation } from "../Hooks/GeoLocation";
+import Button from "./Button";
+import { UseUrlPosition } from "../Hooks/UseUrlPosition";
 
 const Map = () => {
   const { cities } = useCities();
-  const navigate = useNavigate();
-  const [searchParams, setSearchParams] = useSearchParams();
+  const [MapLat, MapLng] = UseUrlPosition();
 
-  const lat = searchParams.get("lat") || 40; // Default latitude
-  const lng = searchParams.get("lng") || 0; // Default longitude
-  const [mapPosition, setMapPosition] = useState([lat, lng]);
+  // Default longitude
+  const [mapPosition, setMapPosition] = useState([MapLat, MapLng]);
+  const {
+    isLoading: isloadingPostion,
+    position: geolocationposition,
+    getPosition,
+  } = useGeolocation();
 
+  useEffect(
+    function () {
+      if (geolocationposition) {
+        setMapPosition([geolocationposition.lat, geolocationposition.lng]);
+      }
+    },
+    [geolocationposition]
+  );
   return (
     <div className={styles.mapContainer}>
+      {!geolocationposition && (
+        <Button type="position" onClick={getPosition}>
+          {isloadingPostion ? "Loading......" : "Use your Position"}
+        </Button>
+      )}
       <MapContainer
         center={mapPosition}
-        zoom={13}
+        zoom={6}
         scrollWheelZoom={true}
         className={styles.map}
       >
@@ -39,9 +65,22 @@ const Map = () => {
             </Popup>
           </Marker>
         ))}
+        <DetectClick />
+
+        <ChangeCenter position={mapPosition} />
       </MapContainer>
     </div>
   );
 };
-
+function ChangeCenter({ position }) {
+  const map = useMap();
+  map.setView(position);
+  return null;
+}
+function DetectClick() {
+  const navigate = useNavigate();
+  useMapEvents({
+    click: (e) => navigate(`form?lat=${e.latlng.lat}&lng=${e.latlng.lng}`),
+  });
+}
 export default Map;
